@@ -8,7 +8,7 @@ env:
     - LANG: C.UTF-8
     - SNAPCRAFT_ENABLE_SILENT_REPORT: y
     - SNAPCRAFT_BUILD_INFO: 1
-    #- SOURCE_TAG: vX.Y.Z
+    - SNAPCRAFT_BUILD_ENVIRONMENT: 'lxd'
 
 addons:
   snaps:
@@ -17,7 +17,12 @@ addons:
       confinement: classic
 
 script:
-- snapcraft --destructive-mode
+  - sudo usermod --append --groups lxd $USER
+  - sudo /snap/bin/lxd.migrate -yes
+  - sudo /snap/bin/lxd waitready
+  - sudo /snap/bin/lxd init --auto
+  - 'if [ -n "$SOURCE_TAG" ]; then sed -i "s/source-branch.*/source-tag: $SOURCE_TAG/" snap/snapcraft.yaml ; fi'
+  - sg lxd -c snapcraft
 
 after_failure:
 - sudo journalctl -u snapd
