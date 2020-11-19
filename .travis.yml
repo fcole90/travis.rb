@@ -1,5 +1,6 @@
 language: shell
 dist: xenial
+os: linux
 
 env:
   global:
