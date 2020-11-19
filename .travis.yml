@@ -1,8 +1,6 @@
 language: shell
 dist: xenial
 
-
-
 env:
   global:
     - LC_ALL: C.UTF-8
@@ -25,9 +23,9 @@ script:
  after_failure:
   - sudo journalctl -u snapd
   
-  deploy:
-    provider: snap
-    snap: cmake_*.snap
-    channel: stable
-    cleanup: false
-    skip_cleanup: true
+deploy:
+  provider: snap
+  snap: travis_*.snap
+  channel: stable
+  cleanup: false
+  skip_cleanup: true
