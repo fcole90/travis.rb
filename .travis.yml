@@ -15,11 +15,9 @@ addons:
     - name: snapcraft
       channel: stable
       confinement: classic
-    - name: docker
-      channel: stable
 
 script:
-- sudo docker run -v $(pwd):/my-snap snapcore/snapcraft sh -c "apt update && cd /my-snap && snapcraft"
+- snapcraft --destructive-mode
 
 after_failure:
 - sudo journalctl -u snapd
