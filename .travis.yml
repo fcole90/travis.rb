@@ -11,18 +11,18 @@ env:
 
 addons:
   snaps:
-   - name: snapcraft
-     channel: stable
-     confinement: classic
-   - name: docker
-     channel: stable
+    - name: snapcraft
+      channel: stable
+      confinement: classic
+    - name: docker
+      channel: stable
 
 script:
- - sudo docker run -v $(pwd):/my-snap snapcore/snapcraft sh -c "apt update && cd /my-snap && snapcraft"
- 
- after_failure:
-  - sudo journalctl -u snapd
-  
+- sudo docker run -v $(pwd):/my-snap snapcore/snapcraft sh -c "apt update && cd /my-snap && snapcraft"
+
+after_failure:
+- sudo journalctl -u snapd
+
 deploy:
   provider: snap
   snap: travis_*.snap
